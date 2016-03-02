@@ -1,0 +1,10 @@
+--- #PLAYBOOK FOR OS UPDATE USING YUM
+- hosts: "{{ var_hosts }}"
+  user: "{{ var_remote_user }}"
+  sudo: "{{ var_sudo }}"
+  connection: "{{ var_connection }}"
+  gather_facts: "{{ var_gather_facts }}"
+  vars_files: 
+         - redhat_os_upgrade/vars/main.yml 
+  roles:
+    - redhat_os_upgrade
