@@ -1,0 +1,21 @@
+---
+  - name: Checking for apt-get -s dist-upgrade before running apt-get dist-upgrade
+    shell: 'apt-get -s dist-upgrade > /home/{{ var_remote_user }}/apt_ds_pre.log || test $? -eq 100'
+  - name: Fetching the result of apt-get -s dist-upgrade
+    fetch: src=/home/{{ var_remote_user }}/apt_ds_pre.log dest=/home/{{ var_remote_user }}/logs/apt_ds_pre.log.{{ ansible_hostname }} flat=yes chmod=750
+  - name: Updating the apt cache
+    apt: update_cache=yes cache_valid_time=3600
+  - name: Running apt-get dist-upgrade to patch the system
+    apt:  upgrade=dist
+    async: 7200
+    poll: 15
+  - name: Checking for apt-get -s dist-upgrade after running apt-get dist-upgrade
+    shell: 'apt-get -s dist-upgrade > /home/{{ var_remote_user }}/apt_ds_post.log || test $? -eq 100'
+  - name: Fetching the result of apt-get -s dist-upgrade
+    fetch: src=/home/{{ var_remote_user }}/apt_ds_post.log dest=/home/{{ var_remote_user }}/logs/apt_ds_post.log.{{ ansible_hostname }} flat=yes chmod=750
+  - name: Determine Reboot is needed or not
+    stat: path=/var/run/reboot-required get_md5=no
+    register: file
+  - name: Rebooting ...
+    command: reboot "Ansible kernel update applied"
+    when: file.stat.exists == true

@@ -1,4 +1,4 @@
-var_hosts: db
+var_hosts: acs
 var_remote_user: vagrant
 var_sudo: yes
 var_connection: ssh
