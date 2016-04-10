@@ -1,4 +1,7 @@
 ---
+  - name: Checking for if the Server OS is Debian Based Distributions
+    fail: msg="Server OS is not Debian Based Distributions or Package Manager is not apt"
+    when: (ansible_os_family != "Debian" and ansible_pkg_mgr != "apt")
   - name: Checking for apt-get -s dist-upgrade before running apt-get dist-upgrade
     shell: 'apt-get -s dist-upgrade > /home/{{ var_remote_user }}/apt_ds_pre.log || test $? -eq 100'
   - name: Fetching the result of apt-get -s dist-upgrade

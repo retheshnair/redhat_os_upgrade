@@ -1,4 +1,9 @@
 ---
+  - name: Checking for if the Server OS is RedHat Based Distributions
+    fail: msg="Server OS is not RedHat Based Distributions or Package Manager is not yum"
+    when: (ansible_os_family != "RedHat" and ansible_pkg_mgr != "yum")
+  - name: Doing a yum clean
+    shell: yum clean all
   - name: Checking for yum check-update before running yum update
     shell: 'yum check-update > /home/{{ var_remote_user }}/yum_cu_pre.log  || test $? -eq 100'
   - name: Fetching the result of yum check-update
@@ -16,7 +21,7 @@
     ignore_errors: true
     register: reboot_hint
   - name: Determine Reboot is needed or not
-    command: sleep 2 && shutdown -r now "Ansible kernel update applied"
+    shell: sleep 2 && /sbin/shutdown -r now "Ansible kernel update applied"
     async: 0
     poll: 0
     ignore_errors: true

@@ -1,4 +1,4 @@
-var_hosts: acs
+var_hosts: ubuntu
 var_remote_user: vagrant
 var_sudo: yes
 var_connection: ssh
