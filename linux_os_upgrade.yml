@@ -4,5 +4,8 @@
   sudo: "{{ var_sudo }}"
   connection: "{{ var_connection }}"
   gather_facts: "{{ var_gather_facts }}"
+  vars_files:
+    - vars.yml
   roles:
-    - redhat_os_upgrade
+    - { role: redhat_os_upgrade, when: "ansible_os_family == 'RedHat'" }
+    - { role: ubuntu_os_upgrade, when: "ansible_os_family == 'Debian'" }
