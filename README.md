@@ -10,14 +10,17 @@ This Ansible Playbook is used of the patching of Redhat and Ubuntu Servers.
 
 
 Redhat Based Distributions Patching
+===================================
 
 ansible-playbook   redhat_os_upgrade.yml
 
 Debian Based Distributions Patching
+===================================
 
 ansible-plyabook    ubuntu_os_upgrade.yml
 
 Multiple Distribution Patching
+==============================
 
 ansible-playbook   linux_os_upgrade.yml
 
