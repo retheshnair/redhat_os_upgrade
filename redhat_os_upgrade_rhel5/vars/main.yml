@@ -1,4 +1,4 @@
-var_hosts: rhel6
+var_hosts: rhel5
 var_remote_user: vagrant
 var_sudo: yes
 var_connection: ssh
